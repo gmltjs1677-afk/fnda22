@@ -37,7 +37,7 @@
                     }
                 }
             }
-        }
+        };
     </script>
     <style>
         body {
@@ -58,12 +58,6 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
-        .green-gradient-bg {
-            background: linear-gradient(135deg, #004B29 0%, #00331C 100%);
-        }
-        .burgundy-gradient-bg {
-            background: linear-gradient(135deg, #5E1914 0%, #3D0E0B 100%);
-        }
         .custom-scrollbar::-webkit-scrollbar {
             width: 6px;
             height: 6px;
@@ -75,17 +69,6 @@
         .custom-scrollbar::-webkit-scrollbar-thumb {
             background: #C5A059;
             border-radius: 4px;
-        }
-        .storyboard-timeline-dot::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: -12px;
-            transform: translateY(-50%);
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background-color: #C5A059;
         }
     </style>
 </head>
@@ -131,7 +114,7 @@
                 </div>
 
                 <!-- Mobile Menu Toggle Button -->
-                <button id="mobileMenuBtn" class="md:hidden p-2 rounded-lg text-gray-300 hover:text-white hover:bg-white/10">
+                <button id="mobileMenuBtn" class="md:hidden p-2 rounded-lg text-gray-300 hover:text-white hover:bg-white/10" aria-label="Toggle Navigation Menu">
                     <i class="fa-solid fa-bars text-xl"></i>
                 </button>
             </div>
@@ -588,6 +571,16 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- 5-Grid Image Gallery Below Carousel -->
+                <div class="pt-6 border-t border-gray-100 space-y-3">
+                    <h4 class="text-sm font-bold text-gray-900 flex items-center gap-2">
+                        <i class="fa-solid fa-images text-shinsegae-burgundy"></i> 카드뉴스 5컷 전체 이미지 리스트 (luggage_pass_cardnews_01 ~ 05.png)
+                    </h4>
+                    <div id="cardNewsGridGallery" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
+                        <!-- Rendered via JS -->
+                    </div>
+                </div>
             </div>
 
             <!-- 3.3 Shorts Video Player & Storyboard Section -->
@@ -595,10 +588,10 @@
                 <div class="flex items-center justify-between border-b border-gray-100 pb-4">
                     <div>
                         <span class="text-xs font-bold text-shinsegae-gold uppercase">Asset 03</span>
-                        <h3 class="text-xl font-bold text-gray-900">3.3 쇼츠 영상 50초 스토리보드 & 비디오 플레이어 (Shorts Video)</h3>
+                        <h3 class="text-xl font-bold text-gray-900">3.3 쇼츠 영상 50초 스토리보드 & 9:16 비디오 플레이어</h3>
                     </div>
                     <span class="px-3 py-1 bg-shinsegae-gold/20 text-shinsegae-darkGreen font-bold text-xs rounded-full border border-shinsegae-gold">
-                        9:16 쇼츠 영상 (영상 완성본.mp4)
+                        영상 완성본.mp4 (9:16)
                     </span>
                 </div>
 
@@ -607,7 +600,7 @@
                     <div class="lg:col-span-5 flex justify-center">
                         <div class="relative w-full max-w-xs aspect-[9/16] rounded-3xl bg-black border-4 border-slate-800 shadow-2xl overflow-hidden flex flex-col justify-between p-4 text-white group">
                             <!-- Real MP4 Video Player Element -->
-                            <video id="shortsVideoPlayer" class="absolute inset-0 w-full h-full object-cover z-0" controls loop playsinline muted autoplay>
+                            <video id="shortsVideoPlayer" class="absolute inset-0 w-full h-full object-cover z-0" controls loop playsinline muted autoplay preload="metadata">
                                 <source src="영상 완성본.mp4" type="video/mp4">
                                 브라우저가 비디오 태그를 지원하지 않습니다.
                             </video>
@@ -625,7 +618,7 @@
                                 </span>
                             </div>
 
-                            <!-- Screen Visual Representation Area (Overlay Details on Hover/Interaction) -->
+                            <!-- Screen Visual Representation Area -->
                             <div id="shortsScreenArea" class="my-auto text-center space-y-2 z-20 transition-all duration-300 pointer-events-none">
                                 <!-- Dynamic Visual Rendered via JS -->
                             </div>
@@ -892,11 +885,7 @@
 
     <!-- JAVASCRIPT LOGIC -->
     <script>
-        // -------------------------------------------------------------
-        // DATA DEFINITIONS & STATE
-        // -------------------------------------------------------------
-
-        // 1. Card News Data (5 Slides)
+        // 1. Card News Data (5 Slides with image paths)
         const cardNewsSlides = [
             {
                 id: 1,
@@ -906,6 +895,7 @@
                 body: "쇼핑은 더 많이, 짐은 더 가볍게\nShop more. Carry less.",
                 color: "from-shinsegae-darkBurgundy via-shinsegae-burgundy to-black",
                 icon: "fa-plane-departure",
+                imgSrc: "luggage_pass_cardnews_01_cover.png",
                 role: "공항·여행 비주얼로 기대감을 형성하는 Hook 슬라이드"
             },
             {
@@ -916,6 +906,7 @@
                 body: "• 무거운 캐리어\n• 늘어나는 쇼핑백\n• 공항까지 이동 피로\n\n짐이 늘수록 쇼핑 시간은 짧아집니다.",
                 color: "from-slate-900 via-shinsegae-darkBurgundy to-slate-900",
                 icon: "fa-face-frown-open",
+                imgSrc: "luggage_pass_cardnews_02_problem.png",
                 role: "무거운 캐리어·쇼핑백·피로 등 페르소나 페인포인트를 시각적 공감"
             },
             {
@@ -926,6 +917,7 @@
                 body: "💳 PAY: 선충전 간편 결제\n🛍️ COLLECT: 구매품 자동 집결\n🚚 DELIVER: 캐리어/구매품 공항 배송\n💎 MEMBERSHIP: 할인 & 라운지 혜택",
                 color: "from-shinsegae-darkGreen via-shinsegae-green to-slate-900",
                 icon: "fa-layer-group",
+                imgSrc: "luggage_pass_cardnews_03_features.png",
                 role: "PAY·COLLECT·DELIVER·MEMBERSHIP 4대 기능을 아이콘과 함께 정리"
             },
             {
@@ -936,6 +928,7 @@
                 body: "1️⃣ 예약 및 패스 발급\n2️⃣ 캐리어 보관\n3️⃣ 패스 태그 후 쇼핑\n4️⃣ 구매품 자동 집결·배송\n5️⃣ 공항 데스크 수령",
                 color: "from-shinsegae-darkBurgundy via-shinsegae-burgundy to-shinsegae-darkGreen",
                 icon: "fa-route",
+                imgSrc: "luggage_pass_cardnews_04_flow.png",
                 role: "예약→보관→태그쇼핑→자동배송→공항수령의 5단계 흐름 안내"
             },
             {
@@ -946,6 +939,7 @@
                 body: "• DAY PASS: 20,000원 (당일 쇼핑)\n• STAY PASS: 35,000원 (최대 7일)\n• PREMIUM PASS: 50,000원 (우선배송/라운지)\n\n👉 지금 LUGGAGE PASS 예약하기 >",
                 color: "from-black via-shinsegae-darkBurgundy to-shinsegae-burgundy",
                 icon: "fa-ticket",
+                imgSrc: "luggage_pass_cardnews_05_price.png",
                 role: "패스 등급별 가격을 비교 제시하고 예약 버튼형 CTA로 마무리"
             }
         ];
@@ -1053,59 +1047,70 @@
         let currentChecklistTab = 'pre';
         let checkedState = {};
 
-        // -------------------------------------------------------------
-        // FUNCTIONS & RENDERERS
-        // -------------------------------------------------------------
-
         // Render Card News Slide
         function renderCardNewsSlide(index) {
             const slide = cardNewsSlides[index];
             const canvas = document.getElementById('cardNewsCanvas');
             const counter = document.getElementById('slideCounter');
 
-            canvas.className = `w-full max-w-md aspect-square rounded-2xl bg-gradient-to-br ${slide.color} p-6 text-white border-2 border-shinsegae-gold shadow-xl flex flex-col justify-between relative overflow-hidden transition-all duration-300`;
+            if (!canvas || !slide) return;
+
+            canvas.className = `w-full max-w-md aspect-square rounded-2xl bg-gradient-to-br ${slide.color} p-4 sm:p-6 text-white border-2 border-shinsegae-gold shadow-xl flex flex-col justify-between relative overflow-hidden transition-all duration-300 group`;
 
             canvas.innerHTML = `
-                <div class="flex justify-between items-start z-10">
-                    <span class="px-2.5 py-1 bg-shinsegae-gold/20 text-shinsegae-lightGold border border-shinsegae-gold/40 rounded-full text-[10px] font-bold">
-                        ${slide.tag}
-                    </span>
-                    <span class="text-xs font-serif font-bold text-shinsegae-gold">0${slide.id} / 05</span>
+                <!-- Background Image Layer -->
+                <div class="absolute inset-0 z-0 opacity-90 overflow-hidden">
+                    <img src="${slide.imgSrc}" alt="${slide.title}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" onerror="this.style.display='none'">
                 </div>
 
-                <div class="my-auto space-y-3 z-10">
-                    <div class="text-xs text-shinsegae-lightGold font-semibold">${slide.subtitle}</div>
-                    <div class="text-xl sm:text-2xl font-extrabold text-white leading-tight whitespace-pre-line font-serif">
+                <!-- Dark Overlay for Subtitle Readability -->
+                <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-black/60 z-5 pointer-events-none"></div>
+
+                <div class="flex justify-between items-start z-10">
+                    <span class="px-2.5 py-1 bg-shinsegae-gold/30 text-shinsegae-lightGold border border-shinsegae-gold/50 rounded-full text-[10px] font-bold backdrop-blur-md shadow">
+                        ${slide.tag}
+                    </span>
+                    <span class="text-xs font-serif font-bold text-shinsegae-gold bg-black/60 px-2 py-0.5 rounded-full border border-shinsegae-gold/30 backdrop-blur-sm">
+                        0${slide.id} / 05
+                    </span>
+                </div>
+
+                <div class="my-auto space-y-2 z-10">
+                    <div class="text-xs text-shinsegae-lightGold font-semibold drop-shadow">${slide.subtitle}</div>
+                    <div class="text-lg sm:text-xl font-extrabold text-white leading-tight whitespace-pre-line font-serif drop-shadow-md">
                         ${slide.title}
                     </div>
-                    <div class="text-xs text-gray-200 whitespace-pre-line leading-relaxed bg-black/30 p-3 rounded-xl border border-white/10">
+                    <div class="text-[11px] sm:text-xs text-gray-100 whitespace-pre-line leading-relaxed bg-black/60 backdrop-blur-md p-3 rounded-xl border border-white/20 shadow">
                         ${slide.body}
                     </div>
                 </div>
 
-                <div class="flex justify-between items-center text-[10px] text-gray-400 border-t border-white/20 pt-3 z-10">
-                    <span>SHINSEGAE LUGGAGE PASS</span>
+                <div class="flex justify-between items-center text-[10px] text-gray-300 border-t border-white/20 pt-2 z-10">
+                    <span class="font-mono text-shinsegae-lightGold">${slide.imgSrc}</span>
                     <span class="text-shinsegae-gold font-bold">Shop more. Carry less.</span>
                 </div>
             `;
 
-            counter.innerText = `0${slide.id} / 05`;
+            if (counter) counter.innerText = `0${slide.id} / 05`;
             renderCardNewsList();
+            renderCardNewsGridGallery();
         }
 
-        // Render Card News Slide List Selection
-        function renderCardNewsList() {
-            const container = document.getElementById('slideNarrativeList');
+        // Render Card News Grid Gallery Below Carousel
+        function renderCardNewsGridGallery() {
+            const container = document.getElementById('cardNewsGridGallery');
+            if (!container) return;
+
             container.innerHTML = cardNewsSlides.map((slide, idx) => `
-                <div onclick="selectCardNewsSlide(${idx})" class="p-3 rounded-xl border cursor-pointer transition flex items-center justify-between ${idx === currentSlideIndex ? 'bg-shinsegae-burgundy/10 border-shinsegae-burgundy text-shinsegae-burgundy font-bold shadow-sm' : 'bg-slate-50 border-gray-200 text-gray-600 hover:bg-slate-100'}">
-                    <div class="flex items-center space-x-3">
-                        <span class="w-6 h-6 rounded-full ${idx === currentSlideIndex ? 'bg-shinsegae-burgundy text-white' : 'bg-gray-200 text-gray-700'} flex items-center justify-center text-xs font-bold">${slide.id}</span>
-                        <div>
-                            <div class="text-xs font-bold">${slide.tag}</div>
-                            <div class="text-[11px] text-gray-500">${slide.role}</div>
-                        </div>
+                <div onclick="selectCardNewsSlide(${idx})" class="group cursor-pointer bg-slate-900 border ${idx === currentSlideIndex ? 'border-shinsegae-gold ring-2 ring-shinsegae-gold/50' : 'border-gray-200 hover:border-shinsegae-gold'} rounded-xl overflow-hidden shadow-sm transition flex flex-col">
+                    <div class="relative aspect-square bg-slate-800 overflow-hidden">
+                        <img src="${slide.imgSrc}" alt="${slide.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" onerror="this.onerror=null; this.src='https://placehold.co/400x400/00331C/C5A059?text=${encodeURIComponent(slide.imgSrc)}'">
+                        <div class="absolute top-2 left-2 px-1.5 py-0.5 bg-black/80 text-shinsegae-gold text-[10px] font-bold rounded font-mono border border-shinsegae-gold/40">0${slide.id}</div>
                     </div>
-                    <i class="fa-solid fa-chevron-right text-xs opacity-50"></i>
+                    <div class="p-2.5 bg-white flex-grow space-y-0.5">
+                        <div class="text-[11px] font-bold text-gray-900 truncate">${slide.tag}</div>
+                        <div class="text-[9px] text-gray-500 font-mono truncate">${slide.imgSrc}</div>
+                    </div>
                 </div>
             `).join('');
         }
@@ -1124,24 +1129,32 @@
             const subcaption = document.getElementById('shortsSubcaptionText');
             const videoPlayer = document.getElementById('shortsVideoPlayer');
 
-            timeBadge.innerText = scene.time;
-            caption.innerText = `"${scene.subtitle}"`;
-            subcaption.innerText = scene.intent;
+            if (!scene) return;
 
-            screen.innerHTML = `
-                <div class="w-12 h-12 mx-auto rounded-full bg-black/40 border border-shinsegae-gold/60 flex items-center justify-center text-xl text-shinsegae-gold mb-1 backdrop-blur-sm">
-                    <i class="fa-solid ${scene.icon}"></i>
-                </div>
-                <div class="text-[11px] text-gray-100 px-3 py-1.5 rounded-lg bg-black/60 border border-white/20 backdrop-blur-sm max-w-[220px] mx-auto">
-                    ${scene.detail}
-                </div>
-            `;
+            if (timeBadge) timeBadge.innerText = scene.time;
+            if (caption) caption.innerText = `"${scene.subtitle}"`;
+            if (subcaption) subcaption.innerText = scene.intent;
 
-            if (videoPlayer && !isNaN(scene.seekTime)) {
+            if (screen) {
+                screen.innerHTML = `
+                    <div class="w-12 h-12 mx-auto rounded-full bg-black/40 border border-shinsegae-gold/60 flex items-center justify-center text-xl text-shinsegae-gold mb-1 backdrop-blur-sm">
+                        <i class="fa-solid ${scene.icon}"></i>
+                    </div>
+                    <div class="text-[11px] text-gray-100 px-3 py-1.5 rounded-lg bg-black/60 border border-white/20 backdrop-blur-sm max-w-[220px] mx-auto">
+                        ${scene.detail}
+                    </div>
+                `;
+            }
+
+            if (videoPlayer && typeof scene.seekTime === 'number') {
                 try {
                     videoPlayer.currentTime = scene.seekTime;
-                    videoPlayer.play().catch(() => {});
-                } catch(e) {}
+                    videoPlayer.play().catch(function() {
+                        /* Autoplay handler fallback */
+                    });
+                } catch(e) {
+                    /* Video seek exception handling */
+                }
             }
 
             renderShortsTimelineList();
@@ -1149,6 +1162,8 @@
 
         function renderShortsTimelineList() {
             const container = document.getElementById('shortsTimelineContainer');
+            if (!container) return;
+
             container.innerHTML = shortsStoryboard.map((item, idx) => `
                 <div onclick="selectShortsScene(${idx})" class="p-3 rounded-xl border cursor-pointer transition flex items-center justify-between ${idx === currentShortsIndex ? 'bg-shinsegae-gold/20 border-shinsegae-gold text-shinsegae-darkGreen font-bold shadow-sm' : 'bg-slate-50 border-gray-200 text-gray-700 hover:bg-slate-100'}">
                     <div class="flex items-center space-x-3">
@@ -1169,8 +1184,11 @@
         }
 
         // Render Channel Table
-        function renderChannelTable(filter = 'all') {
+        function renderChannelTable(filter) {
+            if (!filter) filter = 'all';
             const tbody = document.getElementById('channelTableBody');
+            if (!tbody) return;
+
             const filtered = filter === 'all' ? channelData : channelData.filter(item => item.category === filter);
 
             tbody.innerHTML = filtered.map(item => `
@@ -1188,7 +1206,9 @@
         // Render Checklist
         function renderChecklist() {
             const container = document.getElementById('checklistItemsContainer');
-            const items = checklistData[currentChecklistTab];
+            if (!container) return;
+
+            const items = checklistData[currentChecklistTab] || [];
 
             container.innerHTML = items.map(item => {
                 const isChecked = !!checkedState[item.id];
@@ -1225,64 +1245,78 @@
             });
 
             const percent = total > 0 ? Math.round((checkedCount / total) * 100) : 0;
-            document.getElementById('overallProgressText').innerText = `${percent}%`;
-            document.getElementById('overallProgressBar').style.width = `${percent}%`;
+            const textElem = document.getElementById('overallProgressText');
+            const barElem = document.getElementById('overallProgressBar');
+
+            if (textElem) textElem.innerText = `${percent}%`;
+            if (barElem) barElem.style.width = `${percent}%`;
         }
 
-        // -------------------------------------------------------------
-        // EVENT LISTENERS & INITIALIZATION
-        // -------------------------------------------------------------
-
-        document.addEventListener('DOMContentLoaded', () => {
+        document.addEventListener('DOMContentLoaded', function() {
             // Mobile Menu Toggle
             const mobileMenuBtn = document.getElementById('mobileMenuBtn');
             const mobileMenu = document.getElementById('mobileMenu');
-            mobileMenuBtn.addEventListener('click', () => {
-                mobileMenu.classList.toggle('hidden');
-            });
+            if (mobileMenuBtn && mobileMenu) {
+                mobileMenuBtn.addEventListener('click', function() {
+                    mobileMenu.classList.toggle('hidden');
+                });
+            }
 
             // Card News Controls
-            document.getElementById('prevSlideBtn').addEventListener('click', () => {
-                currentSlideIndex = (currentSlideIndex - 1 + cardNewsSlides.length) % cardNewsSlides.length;
-                renderCardNewsSlide(currentSlideIndex);
-            });
-            document.getElementById('nextSlideBtn').addEventListener('click', () => {
-                currentSlideIndex = (currentSlideIndex + 1) % cardNewsSlides.length;
-                renderCardNewsSlide(currentSlideIndex);
-            });
+            const prevSlideBtn = document.getElementById('prevSlideBtn');
+            const nextSlideBtn = document.getElementById('nextSlideBtn');
+
+            if (prevSlideBtn) {
+                prevSlideBtn.addEventListener('click', function() {
+                    currentSlideIndex = (currentSlideIndex - 1 + cardNewsSlides.length) % cardNewsSlides.length;
+                    renderCardNewsSlide(currentSlideIndex);
+                });
+            }
+
+            if (nextSlideBtn) {
+                nextSlideBtn.addEventListener('click', function() {
+                    currentSlideIndex = (currentSlideIndex + 1) % cardNewsSlides.length;
+                    renderCardNewsSlide(currentSlideIndex);
+                });
+            }
 
             // Channel Filters
-            document.querySelectorAll('.channel-filter-btn').forEach(btn => {
-                btn.addEventListener('click', (e) => {
-                    document.querySelectorAll('.channel-filter-btn').forEach(b => {
+            document.querySelectorAll('.channel-filter-btn').forEach(function(btn) {
+                btn.addEventListener('click', function(e) {
+                    document.querySelectorAll('.channel-filter-btn').forEach(function(b) {
                         b.classList.remove('active', 'bg-shinsegae-green', 'text-white');
                         b.classList.add('bg-slate-100', 'text-gray-700');
                     });
-                    e.target.classList.add('active', 'bg-shinsegae-green', 'text-white');
-                    e.target.classList.remove('bg-slate-100', 'text-gray-700');
-                    renderChannelTable(e.target.dataset.filter);
+                    const target = e.currentTarget;
+                    target.classList.add('active', 'bg-shinsegae-green', 'text-white');
+                    target.classList.remove('bg-slate-100', 'text-gray-700');
+                    renderChannelTable(target.dataset.filter);
                 });
             });
 
             // Checklist Tabs
-            document.querySelectorAll('.checklist-tab-btn').forEach(btn => {
-                btn.addEventListener('click', (e) => {
-                    document.querySelectorAll('.checklist-tab-btn').forEach(b => {
+            document.querySelectorAll('.checklist-tab-btn').forEach(function(btn) {
+                btn.addEventListener('click', function(e) {
+                    document.querySelectorAll('.checklist-tab-btn').forEach(function(b) {
                         b.classList.remove('active', 'border-shinsegae-green', 'text-shinsegae-green');
                         b.classList.add('border-transparent', 'text-gray-500');
                     });
-                    e.target.classList.add('active', 'border-shinsegae-green', 'text-shinsegae-green');
-                    e.target.classList.remove('border-transparent', 'text-gray-500');
-                    currentChecklistTab = e.target.dataset.tab;
+                    const target = e.currentTarget;
+                    target.classList.add('active', 'border-shinsegae-green', 'text-shinsegae-green');
+                    target.classList.remove('border-transparent', 'text-gray-500');
+                    currentChecklistTab = target.dataset.tab;
                     renderChecklist();
                 });
             });
 
             // Reset Checklist Button
-            document.getElementById('resetChecklistBtn').addEventListener('click', () => {
-                checkedState = {};
-                renderChecklist();
-            });
+            const resetBtn = document.getElementById('resetChecklistBtn');
+            if (resetBtn) {
+                resetBtn.addEventListener('click', function() {
+                    checkedState = {};
+                    renderChecklist();
+                });
+            }
 
             // Initial Renders
             renderCardNewsSlide(0);
