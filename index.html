@@ -99,6 +99,9 @@
                     <a href="#channels" class="px-3 py-2 rounded-md hover:text-shinsegae-gold transition">채널 집행계획</a>
                     <a href="#checklist" class="px-3 py-2 rounded-md hover:text-shinsegae-gold transition">실행 체크리스트</a>
                     <a href="#kpi" class="px-3 py-2 rounded-md hover:text-shinsegae-gold transition">KPI & 기대효과</a>
+                    <a href="./01/web1.html" class="px-3 py-2 bg-shinsegae-gold/20 text-shinsegae-lightGold border border-shinsegae-gold/40 rounded-md hover:bg-shinsegae-gold hover:text-shinsegae-darkGreen transition font-semibold flex items-center gap-1">
+                        <i class="fa-solid fa-square-poll-vertical"></i> 설문조사
+                    </a>
                 </nav>
 
                 <!-- Action Button & Metadata -->
@@ -128,6 +131,7 @@
             <a href="#channels" class="block px-3 py-2 rounded-md hover:bg-white/10">4. 채널별 집행 계획</a>
             <a href="#checklist" class="block px-3 py-2 rounded-md hover:bg-white/10">5. 실행 체크리스트</a>
             <a href="#kpi" class="block px-3 py-2 rounded-md hover:bg-white/10">6. 기대효과 & KPI</a>
+            <a href="./01/web1.html" class="block px-3 py-2 rounded-md bg-shinsegae-gold/20 text-shinsegae-lightGold font-bold border border-shinsegae-gold/40 hover:bg-shinsegae-gold hover:text-shinsegae-darkGreen">7. 설문조사 바로가기</a>
         </div>
     </header>
 
@@ -1096,6 +1100,25 @@
             renderCardNewsGridGallery();
         }
 
+        // Render Card News Narrative Breakdown
+        function renderCardNewsList() {
+            const container = document.getElementById('slideNarrativeList');
+            if (!container) return;
+
+            container.innerHTML = cardNewsSlides.map((slide, idx) => `
+                <div onclick="selectCardNewsSlide(${idx})" class="p-3 rounded-xl border cursor-pointer transition flex items-center justify-between ${idx === currentSlideIndex ? 'bg-shinsegae-burgundy/10 border-shinsegae-burgundy text-shinsegae-burgundy font-bold shadow-sm' : 'bg-slate-50 border-gray-200 text-gray-700 hover:bg-slate-100'}">
+                    <div class="flex items-center space-x-3">
+                        <span class="px-2 py-0.5 rounded font-mono text-[10px] ${idx === currentSlideIndex ? 'bg-shinsegae-burgundy text-white font-bold' : 'bg-gray-200 text-gray-700'}">0${slide.id}</span>
+                        <div>
+                            <div class="text-xs font-bold">${slide.tag}</div>
+                            <div class="text-[11px] text-gray-500">${slide.role}</div>
+                        </div>
+                    </div>
+                    <i class="fa-solid fa-chevron-right text-xs ${idx === currentSlideIndex ? 'text-shinsegae-burgundy' : 'text-gray-400'}"></i>
+                </div>
+            `).join('');
+        }
+
         // Render Card News Grid Gallery Below Carousel
         function renderCardNewsGridGallery() {
             const container = document.getElementById('cardNewsGridGallery');
@@ -1252,6 +1275,7 @@
             if (barElem) barElem.style.width = `${percent}%`;
         }
 
+        // Attach DOM listeners on load
         document.addEventListener('DOMContentLoaded', function() {
             // Mobile Menu Toggle
             const mobileMenuBtn = document.getElementById('mobileMenuBtn');
