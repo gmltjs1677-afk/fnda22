@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="ko" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LUGGAGE PASS - 설문조사 포털</title>
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#f0f7ff',
+              100: '#e0effe',
+              500: '#2563eb',
+              600: '#1d4ed8',
+              700: '#1e40af',
+              900: '#0f172a',
+            },
+            luxury: {
+              gold: '#D4AF37',
+              darkGold: '#AA7C11',
+              rose: '#e0a96d'
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'Noto Sans KR', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    body {
+      font-family: 'Noto Sans KR', 'Inter', sans-serif;
+    }
+    .card-hover {
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .card-hover:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 30px -10px rgba(0, 0, 0, 0.12), 0 10px 15px -5px rgba(0, 0, 0, 0.08);
+    }
+    .glass-effect {
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+    .dark .glass-effect {
+      background: rgba(15, 23, 42, 0.85);
+    }
+    .gradient-border {
+      position: relative;
+      border-radius: 1rem;
+      background: linear-gradient(135deg, rgba(37,99,235,0.1), rgba(212,175,55,0.15));
+    }
+    .gradient-text {
+      background: linear-gradient(135deg, #1d4ed8 0%, #3b82f6 50%, #d4af37 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .dark .gradient-text {
+      background: linear-gradient(135deg, #60a5fa 0%, #93c5fd 50%, #fef08a 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+  </style>
+</head>
+<body class="bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 min-h-screen flex flex-col transition-colors duration-300">
+
+  <!-- Navigation Header -->
+  <header class="sticky top-0 z-40 w-full glass-effect border-b border-slate-200/80 dark:border-slate-800/80 transition-colors">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      
+      <!-- Brand Logo & Title -->
+      <a href="#" class="flex items-center gap-3 group">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-600 via-indigo-600 to-amber-500 flex items-center justify-center text-white shadow-md shadow-blue-500/20 group-hover:scale-105 transition-transform">
+          <i class="fa-solid fa-suitcase-rolling text-lg"></i>
+        </div>
+        <div class="flex flex-col">
+          <span class="font-bold text-lg tracking-tight leading-none text-slate-900 dark:text-white">LUGGAGE PASS</span>
+          <span class="text-xs text-slate-500 dark:text-slate-400 font-medium">Customer Feedback Portal</span>
+        </div>
+      </a>
+
+      <!-- Controls Right Header -->
+      <div class="flex items-center gap-3">
+        <!-- Home Button -->
+        <a href="../index.html" class="flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-semibold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-200 dark:hover:bg-slate-700 border border-slate-200/80 dark:border-slate-800 transition-colors" title="홈으로 이동">
+          <i class="fa-solid fa-house text-blue-600 dark:text-blue-400"></i>
+          <span>홈</span>
+        </a>
+
+        <!-- Dark Mode Toggle Button -->
+        <button id="themeToggle" class="p-2.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" title="다크/라이트 모드 전환" aria-label="Toggle theme">
+          <i class="fa-solid fa-moon dark:hidden text-slate-700"></i>
+          <i class="fa-solid fa-sun hidden dark:block text-amber-400"></i>
+        </button>
+
+        <!-- Help Tooltip Button -->
+        <a href="#faq-section" class="hidden sm:flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-semibold border border-slate-200 dark:border-slate-800 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+          <i class="fa-regular fa-circle-question text-blue-500"></i>
+          <span>도움말</span>
+        </a>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- Hero Banner -->
+  <section class="relative pt-12 pb-8 md:pt-16 md:pb-12 px-4 sm:px-6 lg:px-8 overflow-hidden">
+    <!-- Background Decor Accent -->
+    <div class="absolute -top-24 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-gradient-to-tr from-blue-500/20 via-indigo-500/15 to-amber-500/10 blur-3xl rounded-full pointer-events-none -z-10"></div>
+
+    <div class="max-w-4xl mx-auto text-center">
+      <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-50 dark:bg-blue-950/60 border border-blue-200/80 dark:border-blue-800/80 text-blue-600 dark:text-blue-300 text-xs font-semibold mb-4 animate-fade-in">
+        <i class="fa-solid fa-sparkles text-amber-500"></i>
+        <span>소중한 의견으로 더 나은 서비스를 만들어갑니다</span>
+      </div>
+
+      <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight mb-4 leading-tight">
+        LUGGAGE PASS <br class="hidden sm:inline" />
+        <span class="gradient-text">고객 수요조사 참여 센터</span>
+      </h1>
+
+      <p class="text-sm sm:text-base text-slate-600 dark:text-slate-300 max-w-2xl mx-auto leading-relaxed mb-8">
+        원하시는 설문 항목의 카드를 클릭하시면 해당 설문 페이지로 이동합니다.<br class="hidden sm:inline" />
+        모든 설문은 새 창으로 열리며 약 1~3분의 시간이 소요됩니다.
+      </p>
+
+      <!-- Quick Metrics Bar -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 max-w-3xl mx-auto bg-white/70 dark:bg-slate-900/70 backdrop-blur border border-slate-200/80 dark:border-slate-800 rounded-2xl p-3 shadow-sm">
+        <div class="p-2 text-center">
+          <p class="text-xs text-slate-500 dark:text-slate-400 font-medium">총 진행 설문</p>
+          <p class="text-lg font-bold text-slate-800 dark:text-slate-100 mt-0.5">4 개</p>
+        </div>
+        <div class="p-2 text-center border-l border-slate-200 dark:border-slate-800">
+          <p class="text-xs text-slate-500 dark:text-slate-400 font-medium">평균 소요 시간</p>
+          <p class="text-lg font-bold text-blue-600 dark:text-blue-400 mt-0.5">약 2 분</p>
+        </div>
+        <div class="p-2 text-center border-l border-slate-200 dark:border-slate-800">
+          <p class="text-xs text-slate-500 dark:text-slate-400 font-medium">응답 방식</p>
+          <p class="text-lg font-bold text-indigo-600 dark:text-indigo-400 mt-0.5">Google Forms</p>
+        </div>
+        <div class="p-2 text-center border-l border-slate-200 dark:border-slate-800">
+          <p class="text-xs text-slate-500 dark:text-slate-400 font-medium">열기 방식</p>
+          <p class="text-lg font-bold text-amber-600 dark:text-amber-400 mt-0.5">새 창 연동</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Content & Filters -->
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-20 flex-grow w-full">
+    
+    <!-- Search & Filter Controls Bar -->
+    <div class="flex flex-col sm:flex-row items-center justify-between gap-4 mb-8 bg-white dark:bg-slate-900 p-4 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-sm">
+      
+      <!-- Filter Tags -->
+      <div class="flex items-center gap-1.5 overflow-x-auto w-full sm:w-auto pb-2 sm:pb-0 scrollbar-none" id="filterContainer">
+        <button data-category="all" class="filter-btn active px-4 py-2 rounded-xl text-xs font-semibold transition-all bg-blue-600 text-white shadow-sm shadow-blue-500/20 whitespace-nowrap">
+          전체 보기
+        </button>
+        <button data-category="shinsegae" class="filter-btn px-4 py-2 rounded-xl text-xs font-semibold transition-all bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 whitespace-nowrap">
+          신세계백화점
+        </button>
+        <button data-category="general" class="filter-btn px-4 py-2 rounded-xl text-xs font-semibold transition-all bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 whitespace-nowrap">
+          일반 고객
+        </button>
+        <button data-category="global" class="filter-btn px-4 py-2 rounded-xl text-xs font-semibold transition-all bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 whitespace-nowrap">
+          글로벌 (Multilingual)
+        </button>
+      </div>
+
+      <!-- Search Input -->
+      <div class="relative w-full sm:w-64">
+        <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
+        <input 
+          type="text" 
+          id="searchInput" 
+          placeholder="설문 제목 검색..." 
+          class="w-full pl-10 pr-4 py-2 text-xs rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all"
+        />
+      </div>
+
+    </div>
+
+    <!-- Cards Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="cardsGrid">
+
+      <!-- Card 1: LUGGAGE PASS 고객 수요조사 -->
+      <div 
+        class="survey-card card-hover group relative bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-6 flex flex-col justify-between overflow-hidden cursor-pointer"
+        data-title="LUGGAGE PASS 고객 수요조사 Customer Demand Survey"
+        data-category="general"
+        onclick="openSurvey('https://docs.google.com/forms/d/e/1FAIpQLSc1IUx54EPXdjE_Phpto-G37xs3VVA4A_jlvfCB-A6-YBInPA/viewform', event)"
+      >
+        <!-- Top Accent Line -->
+        <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-500 to-cyan-400 group-hover:h-1.5 transition-all"></div>
+
+        <div>
+          <!-- Tags & Badge -->
+          <div class="flex items-center justify-between mb-4">
+            <div class="flex items-center gap-2">
+              <span class="px-2.5 py-1 rounded-lg bg-blue-50 dark:bg-blue-950/80 text-blue-600 dark:text-blue-400 border border-blue-200/60 dark:border-blue-800/60 text-xs font-semibold">
+                <i class="fa-solid fa-users mr-1"></i>일반 고객
+              </span>
+              <span class="px-2.5 py-1 rounded-lg bg-emerald-50 dark:bg-emerald-950/80 text-emerald-600 dark:text-emerald-400 border border-emerald-200/60 dark:border-emerald-800/60 text-xs font-semibold">
+                진행중
+              </span>
+            </div>
+            <span class="text-xs text-slate-400 flex items-center gap-1">
+              <i class="fa-regular fa-clock"></i> 약 2분 소요
+            </span>
+          </div>
+
+          <!-- Main Title -->
+          <h3 class="text-xl font-bold text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors leading-snug mb-2">
+            LUGGAGE PASS 고객 수요조사
+          </h3>
+          <p class="text-xs font-medium text-slate-400 mb-4">Customer Demand Survey</p>
+
+          <!-- Description -->
+          <p class="text-sm text-slate-600 dark:text-slate-300 line-clamp-2 leading-relaxed mb-6">
+            LUGGAGE PASS 서비스 이용 경험 및 개선 필요 사항에 대한 일반 고객님들의 소중한 의견을 모으고 있습니다.
+          </p>
+        </div>
+
+        <!-- Footer Actions -->
+        <div class="pt-4 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between mt-auto">
+          <div class="flex items-center gap-2">
+            <button 
+              type="button"
+              onclick="copyLink('https://docs.google.com/forms/d/e/1FAIpQLSc1IUx54EPXdjE_Phpto-G37xs3VVA4A_jlvfCB-A6-YBInPA/viewform', event)"
+              class="p-2 rounded-lg text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+              title="링크 복사"
+            >
+              <i class="fa-regular fa-copy"></i>
+            </button>
+            <button 
+              type="button"
+              onclick="showQR('https://docs.google.com/forms/d/e/1FAIpQLSc1IUx54EPXdjE_Phpto-G37xs3VVA4A_jlvfCB-A6-YBInPA/viewform', 'LUGGAGE PASS 고객 수요조사', event)"
+              class="p-2 rounded-lg text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+              title="QR코드 보기"
+            >
+              <i class="fa-solid fa-qrcode"></i>
+            </button>
+          </div>
+
+          <!-- Primary CTA Button -->
+          <a 
+            href="https://docs.google.com/forms/d/e/1FAIpQLSc1IUx54EPXdjE_Phpto-G37xs3VVA4A_jlvfCB-A6-YBInPA/viewform" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold shadow-sm shadow-blue-500/30 transition-all group-hover:translate-x-1"
+            onclick="event.stopPropagation();"
+          >
+            <span>설문 작성하기</span>
+            <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+          </a>
+        </div>
+      </div>
+
+      <!-- Card 2: 신세계백화점 LUGGAGE PASS 수요조사 -->
+      <div 
+        class="survey-card card-hover group relative bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-6 flex flex-col justify-between overflow-hidden cursor-pointer"
+        data-title="신세계백화점 LUGGAGE PASS 수요조사 Demand Survey"
+        data-category="shinsegae"
+        onclick="openSurvey('https://docs.google.com/forms/d/e/1FAIpQLSct9TpVQz80roNsfBo7Mdp3KuwA9AkjfJgatKfHAg3_cIYH3Q/viewform?fbzx=3526852584534146177', event)"
+      >
+        <!-- Top Accent Line -->
+        <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-amber-500 to-rose-500 group-hover:h-1.5 transition-all"></div>
+
+        <div>
+          <!-- Tags & Badge -->
+          <div class="flex items-center justify-between mb-4">
+            <div class="flex items-center gap-2">
+              <span class="px-2.5 py-1 rounded-lg bg-amber-50 dark:bg-amber-950/80 text-amber-700 dark:text-amber-400 border border-amber-200/60 dark:border-amber-800/60 text-xs font-semibold">
+                <i class="fa-solid fa-building text-xs mr-1"></i>신세계백화점
+              </span>
+              <span class="px-2.5 py-1 rounded-lg bg-emerald-50 dark:bg-emerald-950/80 text-emerald-600 dark:text-emerald-400 border border-emerald-200/60 dark:border-emerald-800/60 text-xs font-semibold">
+                진행중
+              </span>
+            </div>
+            <span class="text-xs text-slate-400 flex items-center gap-1">
+              <i class="fa-regular fa-clock"></i> 약 2~3분 소요
+            </span>
+          </div>
+
+          <!-- Main Title -->
+          <h3 class="text-xl font-bold text-slate-900 dark:text-white group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors leading-snug mb-2">
+            신세계백화점 LUGGAGE PASS 수요조사
+          </h3>
+          <p class="text-xs font-medium text-slate-400 mb-4">Demand Survey (Department Store)</p>
+
+          <!-- Description -->
+          <p class="text-sm text-slate-600 dark:text-slate-300 line-clamp-2 leading-relaxed mb-6">
+            신세계백화점 방문 고객을 대상으로 한 짐 보관 및 배송 LUGGAGE PASS 서비스 만족도 및 수요 파악 조사입니다.
+          </p>
+        </div>
+
+        <!-- Footer Actions -->
+        <div class="pt-4 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between mt-auto">
+          <div class="flex items-center gap-2">
+            <button 
+              type="button"
+              onclick="copyLink('https://docs.google.com/forms/d/e/1FAIpQLSct9TpVQz80roNsfBo7Mdp3KuwA9AkjfJgatKfHAg3_cIYH3Q/viewform?fbzx=3526852584534146177', event)"
+              class="p-2 rounded-lg text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+              title="링크 복사"
+            >
+              <i class="fa-regular fa-copy"></i>
+            </button>
+            <button 
+              type="button"
+              onclick="showQR('https://docs.google.com/forms/d/e/1FAIpQLSct9TpVQz80roNsfBo7Mdp3KuwA9AkjfJgatKfHAg3_cIYH3Q/viewform?fbzx=3526852584534146177', '신세계백화점 LUGGAGE PASS 수요조사', event)"
+              class="p-2 rounded-lg text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+              title="QR코드 보기"
+            >
+              <i class="fa-solid fa-qrcode"></i>
+            </button>
+          </div>
+
+          <!-- Primary CTA Button -->
+          <a 
+            href="https://docs.google.com/forms/d/e/1FAIpQLSct9TpVQz80roNsfBo7Mdp3KuwA9AkjfJgatKfHAg3_cIYH3Q/viewform?fbzx=3526852584534146177" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-amber-600 hover:bg-amber-700 text-white text-xs font-semibold shadow-sm shadow-amber-500/30 transition-all group-hover:translate-x-1"
+            onclick="event.stopPropagation();"
+          >
+            <span>설문 작성하기</span>
+            <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+          </a>
+        </div>
+      </div>
+
+      <!-- Card 3: [신세계백화점] LUGGAGE PASS 사전 수요조사 -->
+      <div 
+        class="survey-card card-hover group relative bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-6 flex flex-col justify-between overflow-hidden cursor-pointer"
+        data-title="[신세계백화점] LUGGAGE PASS 사전 수요조사 Quick Survey"
+        data-category="shinsegae"
+        onclick="openSurvey('https://docs.google.com/forms/d/e/1FAIpQLSdk7kSVZk_GXEndFh-Y0mSimHFD22V531to2viTKdu7MFRKJg/viewform', event)"
+      >
+        <!-- Top Accent Line -->
+        <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-indigo-500 to-purple-500 group-hover:h-1.5 transition-all"></div>
+
+        <div>
+          <!-- Tags & Badge -->
+          <div class="flex items-center justify-between mb-4">
+            <div class="flex items-center gap-2">
+              <span class="px-2.5 py-1 rounded-lg bg-indigo-50 dark:bg-indigo-950/80 text-indigo-600 dark:text-indigo-400 border border-indigo-200/60 dark:border-indigo-800/60 text-xs font-semibold">
+                <i class="fa-solid fa-bolt mr-1"></i>빠른 설문 (Quick)
+              </span>
+              <span class="px-2.5 py-1 rounded-lg bg-emerald-50 dark:bg-emerald-950/80 text-emerald-600 dark:text-emerald-400 border border-emerald-200/60 dark:border-emerald-800/60 text-xs font-semibold">
+                진행중
+              </span>
+            </div>
+            <span class="text-xs text-slate-400 flex items-center gap-1">
+              <i class="fa-regular fa-clock"></i> 약 1분 소요
+            </span>
+          </div>
+
+          <!-- Main Title -->
+          <h3 class="text-xl font-bold text-slate-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors leading-snug mb-2">
+            [신세계백화점] LUGGAGE PASS 사전 수요조사
+          </h3>
+          <p class="text-xs font-medium text-slate-400 mb-4">Quick Survey</p>
+
+          <!-- Description -->
+          <p class="text-sm text-slate-600 dark:text-slate-300 line-clamp-2 leading-relaxed mb-6">
+            빠르고 간편하게 응답할 수 있는 신세계백화점 LUGGAGE PASS 서비스 관련 사전 리서치입니다.
+          </p>
+        </div>
+
+        <!-- Footer Actions -->
+        <div class="pt-4 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between mt-auto">
+          <div class="flex items-center gap-2">
+            <button 
+              type="button"
+              onclick="copyLink('https://docs.google.com/forms/d/e/1FAIpQLSdk7kSVZk_GXEndFh-Y0mSimHFD22V531to2viTKdu7MFRKJg/viewform', event)"
+              class="p-2 rounded-lg text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+              title="링크 복사"
+            >
+              <i class="fa-regular fa-copy"></i>
+            </button>
+            <button 
+              type="button"
+              onclick="showQR('https://docs.google.com/forms/d/e/1FAIpQLSdk7kSVZk_GXEndFh-Y0mSimHFD22V531to2viTKdu7MFRKJg/viewform', '[신세계백화점] LUGGAGE PASS 사전 수요조사', event)"
+              class="p-2 rounded-lg text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+              title="QR코드 보기"
+            >
+              <i class="fa-solid fa-qrcode"></i>
+            </button>
+          </div>
+
+          <!-- Primary CTA Button -->
+          <a 
+            href="https://docs.google.com/forms/d/e/1FAIpQLSdk7kSVZk_GXEndFh-Y0mSimHFD22V531to2viTKdu7MFRKJg/viewform" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold shadow-sm shadow-indigo-500/30 transition-all group-hover:translate-x-1"
+            onclick="event.stopPropagation();"
+          >
+            <span>설문 작성하기</span>
+            <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+          </a>
+        </div>
+      </div>
+
+      <!-- Card 4: [LUGGAGE PASS] 글로벌 사전 수요조사 -->
+      <div 
+        class="survey-card card-hover group relative bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-6 flex flex-col justify-between overflow-hidden cursor-pointer"
+        data-title="[LUGGAGE PASS] 글로벌 사전 수요조사 Multilingual Survey Global"
+        data-category="global"
+        onclick="openSurvey('https://docs.google.com/forms/d/e/1FAIpQLSc5WGxr5Uu3HQRhsrUAsdET3r2Lf6ZaIHFveE81hG8dIfBZXQ/viewform', event)"
+      >
+        <!-- Top Accent Line -->
+        <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-teal-400 to-emerald-500 group-hover:h-1.5 transition-all"></div>
+
+        <div>
+          <!-- Tags & Badge -->
+          <div class="flex items-center justify-between mb-4">
+            <div class="flex items-center gap-2">
+              <span class="px-2.5 py-1 rounded-lg bg-teal-50 dark:bg-teal-950/80 text-teal-600 dark:text-teal-400 border border-teal-200/60 dark:border-teal-800/60 text-xs font-semibold">
+                <i class="fa-solid fa-globe mr-1"></i>글로벌 (Multilingual)
+              </span>
+              <span class="px-2.5 py-1 rounded-lg bg-emerald-50 dark:bg-emerald-950/80 text-emerald-600 dark:text-emerald-400 border border-emerald-200/60 dark:border-emerald-800/60 text-xs font-semibold">
+                진행중
+              </span>
+            </div>
+            <span class="text-xs text-slate-400 flex items-center gap-1">
+              <i class="fa-regular fa-clock"></i> 약 2분 소요
+            </span>
+          </div>
+
+          <!-- Main Title -->
+          <h3 class="text-xl font-bold text-slate-900 dark:text-white group-hover:text-teal-600 dark:group-hover:text-teal-400 transition-colors leading-snug mb-2">
+            [LUGGAGE PASS] 글로벌 사전 수요조사
+          </h3>
+          <p class="text-xs font-medium text-slate-400 mb-4">Multilingual Survey (EN / JP / CN)</p>
+
+          <!-- Description -->
+          <p class="text-sm text-slate-600 dark:text-slate-300 line-clamp-2 leading-relaxed mb-6">
+            외국인 관광객 및 글로벌 이용객을 위한 다국어 지원 LUGGAGE PASS 서비스 사전 수요 조사입니다.
+          </p>
+        </div>
+
+        <!-- Footer Actions -->
+        <div class="pt-4 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between mt-auto">
+          <div class="flex items-center gap-2">
+            <button 
+              type="button"
+              onclick="copyLink('https://docs.google.com/forms/d/e/1FAIpQLSc5WGxr5Uu3HQRhsrUAsdET3r2Lf6ZaIHFveE81hG8dIfBZXQ/viewform', event)"
+              class="p-2 rounded-lg text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+              title="링크 복사"
+            >
+              <i class="fa-regular fa-copy"></i>
+            </button>
+            <button 
+              type="button"
+              onclick="showQR('https://docs.google.com/forms/d/e/1FAIpQLSc5WGxr5Uu3HQRhsrUAsdET3r2Lf6ZaIHFveE81hG8dIfBZXQ/viewform', '[LUGGAGE PASS] 글로벌 사전 수요조사', event)"
+              class="p-2 rounded-lg text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+              title="QR코드 보기"
+            >
+              <i class="fa-solid fa-qrcode"></i>
+            </button>
+          </div>
+
+          <!-- Primary CTA Button -->
+          <a 
+            href="https://docs.google.com/forms/d/e/1FAIpQLSc5WGxr5Uu3HQRhsrUAsdET3r2Lf6ZaIHFveE81hG8dIfBZXQ/viewform" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-teal-600 hover:bg-teal-700 text-white text-xs font-semibold shadow-sm shadow-teal-500/30 transition-all group-hover:translate-x-1"
+            onclick="event.stopPropagation();"
+          >
+            <span>설문 작성하기</span>
+            <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+          </a>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Empty State Message -->
+    <div id="noResults" class="hidden text-center py-16">
+      <div class="w-16 h-16 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center mx-auto mb-4 text-slate-400 text-2xl">
+        <i class="fa-solid fa-magnifying-glass"></i>
+      </div>
+      <p class="text-base font-semibold text-slate-700 dark:text-slate-300">검색 결과가 없습니다</p>
+      <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">다른 검색어나 필터를 선택해 주세요.</p>
+    </div>
+
+    <!-- Information Section -->
+    <section id="faq-section" class="mt-16 bg-slate-100/70 dark:bg-slate-900/50 rounded-2xl p-6 sm:p-8 border border-slate-200/80 dark:border-slate-800">
+      <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
+        <i class="fa-solid fa-circle-info text-blue-500"></i>
+        <span>자주 묻는 질문 및 안내사항</span>
+      </h3>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs sm:text-sm text-slate-600 dark:text-slate-300">
+        <div class="bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-200/60 dark:border-slate-800">
+          <p class="font-semibold text-slate-800 dark:text-slate-200 mb-1">Q. 설문 응답은 안전하게 보호되나요?</p>
+          <p class="text-slate-500 dark:text-slate-400">네, 수집된 모든 정보는 Google Forms 보안 방침에 따라 보호되며, 수요 분석 목적 이외에는 사용되지 않습니다.</p>
+        </div>
+        <div class="bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-200/60 dark:border-slate-800">
+          <p class="font-semibold text-slate-800 dark:text-slate-200 mb-1">Q. 새로운 창에서 열리지 않는 경우</p>
+          <p class="text-slate-500 dark:text-slate-400">브라우저의 팝업 차단 설정이 켜져 있는지 확인하시거나, 각 카드의 링크 복사 버튼을 눌러 주소창에 직접 붙여넣어 주세요.</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- QR Code Modal -->
+  <div id="qrModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
+    <div class="bg-white dark:bg-slate-900 rounded-2xl max-w-sm w-full p-6 border border-slate-200 dark:border-slate-800 shadow-2xl relative text-center animate-fade-in">
+      <button 
+        onclick="closeQR()"
+        class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 p-1 rounded-lg"
+      >
+        <i class="fa-solid fa-xmark text-lg"></i>
+      </button>
+
+      <div class="w-12 h-12 rounded-xl bg-blue-50 dark:bg-blue-950 text-blue-600 dark:text-blue-400 flex items-center justify-center mx-auto mb-3 text-xl">
+        <i class="fa-solid fa-qrcode"></i>
+      </div>
+
+      <h4 id="qrModalTitle" class="text-base font-bold text-slate-900 dark:text-white mb-1">모바일 스캔용 QR</h4>
+      <p class="text-xs text-slate-500 dark:text-slate-400 mb-4">스마트폰 카메라로 아래 QR 코드를 스캔하여 접속하세요</p>
+
+      <div class="bg-white p-4 rounded-xl inline-block border border-slate-200 mb-4 shadow-inner">
+        <img id="qrImage" src="" alt="Google Form QR Code" class="w-44 h-44 object-contain mx-auto" />
+      </div>
+
+      <div class="flex gap-2">
+        <button 
+          onclick="closeQR()"
+          class="w-full py-2.5 rounded-xl border border-slate-200 dark:border-slate-800 text-xs font-semibold text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+        >
+          닫기
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="fixed bottom-6 right-6 z-50 bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-900 px-4 py-3 rounded-xl shadow-lg flex items-center gap-2 text-xs font-medium translate-y-20 opacity-0 transition-all duration-300 pointer-events-none">
+    <i class="fa-solid fa-circle-check text-emerald-400 dark:text-emerald-600 text-sm"></i>
+    <span id="toastMsg">링크가 클립보드에 복사되었습니다.</span>
+  </div>
+
+  <!-- Footer -->
+  <footer class="border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 py-8 text-center transition-colors">
+    <div class="max-w-6xl mx-auto px-4">
+      <p class="text-xs text-slate-500 dark:text-slate-400">
+        © 2026 <span class="font-semibold text-slate-700 dark:text-slate-300">LUGGAGE PASS</span>. All rights reserved.
+      </p>
+      <p class="text-[11px] text-slate-400 dark:text-slate-500 mt-1">
+        본 페이지의 설문 링크는 구글 설문지(Google Forms) 서비스로 바로 연결됩니다.
+      </p>
+    </div>
+  </footer>
+
+  <!-- JavaScript Logic -->
+  <script>
+    // Theme Toggle Functionality
+    const themeToggleBtn = document.getElementById('themeToggle');
+    
+    // Check initial preference
+    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      document.documentElement.classList.add('dark');
+    }
+
+    themeToggleBtn.addEventListener('click', () => {
+      document.documentElement.classList.toggle('dark');
+    });
+
+    // Card Open in New Window Function
+    function openSurvey(url, event) {
+      // Prevent opening twice if target was button/link inside card
+      if (event.target.tagName === 'A' || event.target.tagName === 'BUTTON' || event.target.closest('button') || event.target.closest('a')) {
+        return;
+      }
+      window.open(url, '_blank', 'noopener,noreferrer');
+    }
+
+    // Copy Link Function with execCommand Fallback
+    function copyLink(url, event) {
+      if (event) event.stopPropagation();
+      
+      const tempInput = document.createElement('textarea');
+      tempInput.value = url;
+      document.body.appendChild(tempInput);
+      tempInput.select();
+      try {
+        document.execCommand('copy');
+        showToast('설문 링크가 클립보드에 복사되었습니다!');
+      } catch (err) {
+        showToast('링크 복사에 실패했습니다.');
+      }
+      document.body.removeChild(tempInput);
+    }
+
+    // Show Toast Notification
+    function showToast(message) {
+      const toast = document.getElementById('toast');
+      const toastMsg = document.getElementById('toastMsg');
+      toastMsg.innerText = message;
+      
+      toast.classList.remove('translate-y-20', 'opacity-0');
+      toast.classList.add('translate-y-0', 'opacity-100');
+
+      setTimeout(() => {
+        toast.classList.remove('translate-y-0', 'opacity-100');
+        toast.classList.add('translate-y-20', 'opacity-0');
+      }, 2500);
+    }
+
+    // Show QR Code Modal
+    function showQR(url, title, event) {
+      if (event) event.stopPropagation();
+      
+      const modal = document.getElementById('qrModal');
+      const modalTitle = document.getElementById('qrModalTitle');
+      const qrImage = document.getElementById('qrImage');
+
+      modalTitle.innerText = title;
+      // Use QR Server API to generate QR image on the fly
+      qrImage.src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(url)}`;
+      
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function closeQR() {
+      const modal = document.getElementById('qrModal');
+      modal.classList.remove('flex');
+      modal.classList.add('hidden');
+    }
+
+    // Close QR Modal when clicking background overlay
+    document.getElementById('qrModal').addEventListener('click', function(e) {
+      if (e.target === this) {
+        closeQR();
+      }
+    });
+
+    // Filter & Search Logic
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const searchInput = document.getElementById('searchInput');
+    const surveyCards = document.querySelectorAll('.survey-card');
+    const noResults = document.getElementById('noResults');
+
+    let currentCategory = 'all';
+    let currentSearchQuery = '';
+
+    filterButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        filterButtons.forEach(b => {
+          b.classList.remove('active', 'bg-blue-600', 'text-white', 'shadow-sm', 'shadow-blue-500/20');
+          b.classList.add('bg-slate-100', 'dark:bg-slate-800', 'text-slate-600', 'dark:text-slate-300');
+        });
+
+        btn.classList.add('active', 'bg-blue-600', 'text-white', 'shadow-sm', 'shadow-blue-500/20');
+        btn.classList.remove('bg-slate-100', 'dark:bg-slate-800', 'text-slate-600', 'dark:text-slate-300');
+
+        currentCategory = btn.getAttribute('data-category');
+        filterCards();
+      });
+    });
+
+    searchInput.addEventListener('input', (e) => {
+      currentSearchQuery = e.target.value.toLowerCase().trim();
+      filterCards();
+    });
+
+    function filterCards() {
+      let visibleCount = 0;
+
+      surveyCards.forEach(card => {
+        const cardTitle = card.getAttribute('data-title').toLowerCase();
+        const cardCategory = card.getAttribute('data-category');
+
+        const matchesCategory = (currentCategory === 'all' || cardCategory === currentCategory);
+        const matchesSearch = cardTitle.includes(currentSearchQuery);
+
+        if (matchesCategory && matchesSearch) {
+          card.classList.remove('hidden');
+          visibleCount++;
+        } else {
+          card.classList.add('hidden');
+        }
+      });
+
+      if (visibleCount === 0) {
+        noResults.classList.remove('hidden');
+      } else {
+        noResults.classList.add('hidden');
+      }
+    }
+  </script>
+</body>
+</html>
